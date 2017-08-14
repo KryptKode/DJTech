@@ -24,6 +24,7 @@
         <activity
             android:name=".BlogPostDetailActivity"
             android:label="@string/title_activity_blog_post_detail"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".DJTechHomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

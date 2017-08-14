@@ -17,12 +17,15 @@ import com.kryptkode.cyberman.djtech.R;
 public class ChangeThemeDialog extends DialogFragment {
 
     private ChangeThemeDialogListener listener;
+    private int checkedItem;
 
     public interface ChangeThemeDialogListener {
         void onDialogPositiveButtonClicked(DialogFragment dialog);
         void onRadioButtonClicked(int which);
         void onDialogNegativeButtonClicked(DialogFragment dialog);
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -50,7 +53,7 @@ public class ChangeThemeDialog extends DialogFragment {
                 new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.select_theme));
 
-        builder.setSingleChoiceItems(R.array.theme_options, 0, clickListener );
+        builder.setSingleChoiceItems(R.array.theme_options, checkedItem, clickListener );
 
         builder.setPositiveButton(R.string.ok,
                 new DialogInterface.OnClickListener() {
@@ -79,4 +82,12 @@ public class ChangeThemeDialog extends DialogFragment {
         }
     };
 
+
+    public int getCheckedItem() {
+        return checkedItem;
+    }
+
+    public void setCheckedItem(int checkedItem) {
+        this.checkedItem = checkedItem;
+    }
 }

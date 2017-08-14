@@ -64,8 +64,10 @@ public class OptionsActivity extends AppCompatActivity implements ChangeThemeDia
 
                 switch(position){
                     case 0:
+                        SharedPreferences sharedPreferences = getSharedPreferences(MYPRE, Context.MODE_PRIVATE);
+                        int num = sharedPreferences.getInt(THEME, 0);
                         changeThemeDialog = new ChangeThemeDialog();
-
+                        changeThemeDialog.setCheckedItem(num);
                         changeThemeDialog.show(getSupportFragmentManager(), "Theme");
                         break;
                     case 1:

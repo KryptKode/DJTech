@@ -63,6 +63,8 @@ public class HomeScreenFragment extends Fragment implements HomeScreenAdapter.Ho
     private SwipeRefreshLayout swipeRefreshLayout;
     private View view;
 
+    private  boolean isLoaded;
+
     private TextView errorTextView;
     private ImageView errorImageView;
     private ProgressBar progressBar;
@@ -178,12 +180,7 @@ public class HomeScreenFragment extends Fragment implements HomeScreenAdapter.Ho
         progressBar = (ProgressBar) view.findViewById(R.id.loading_progress_bar);
 
 
-        if (NetworkUtils.isOnline(getContext())) {
-            createLoader();
-        } else {
-            //if the device is not online show the error indicatiors
-            HomeScreenFragmentHelper.indicatorsAppear(new View[]{errorTextView, errorImageView}, true);
-        }
+
 
         return view;
     }
@@ -195,6 +192,23 @@ public class HomeScreenFragment extends Fragment implements HomeScreenAdapter.Ho
             getLoaderManager().initLoader(POST_LOADER_ID, null, this);
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (NetworkUtils.isOnline(getContext())) {
+
+            if(!isLoaded){
+
+                createLoader();
+            }
+        } else {
+            //if the device is not online show the error indicatiors
+            HomeScreenFragmentHelper.indicatorsAppear(new View[]{errorTextView, errorImageView}, true);
+        }
+
     }
 
     @Override
@@ -281,6 +295,7 @@ public class HomeScreenFragment extends Fragment implements HomeScreenAdapter.Ho
     public void onLoadFinished(Loader<BlogPosts[]> loader, BlogPosts[] data) {
         if (data != null) {
             addNewItemsToList(data);
+            isLoaded = true;
         } else {
             Toast.makeText(getContext(), "Error occured", Toast.LENGTH_LONG).show();
             return;
